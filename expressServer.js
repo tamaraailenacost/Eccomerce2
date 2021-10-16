@@ -15,12 +15,13 @@ const server = app.listen(PORT, () =>
     console.log("servidor corriendo"))
 
 const data = new Contenedor('productos.txt');
-console.log(data)
+const todo = data.getAll();
+
 
 server.on("error", (error) => console.log(`error en el servidor ${error}`))
 
-app.get('/productos', (req, resp) => {
-    resp.send("hola")
+app.get('/product', (req, resp) => {
+    resp.send(todo)
 })
 
 app.get('/roductoRamdom', (req, resp) => {
