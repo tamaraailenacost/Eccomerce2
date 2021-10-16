@@ -16,7 +16,7 @@ class Contenedor {
             //leer el archivo y guardo en array.
             const arrayProducts = await this.getAll()
             let nuevoId = arrayProducts.length + 1
-                //producto = producto.id = nuevoId
+            producto.id = nuevoId
             arrayProducts.push(producto)
             fs.promises.writeFile(this.ruta, JSON.stringify(arrayProducts), () => {
                 console.log(`Archivo ${this.ruta} escrito con éxito`);
