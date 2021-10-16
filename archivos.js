@@ -16,10 +16,12 @@ class Contenedor {
             //leer el archivo y guardo en array.
             const arrayProducts = await this.getAll()
             let nuevoId = arrayProducts.length + 1
+            producto = producto.id = nuevoId
             arrayProducts.push(producto)
             fs.promises.writeFile(this.ruta, JSON.stringify(arrayProducts), () => {
                 console.log(`Archivo ${this.ruta} escrito con éxito`);
             })
+            return nuevoId;
         } catch (error) {
             console.log("Error en guardar el ID", error);
             throw error;
@@ -96,7 +98,6 @@ class Contenedor {
 
 
 const productos = {
-    "id": 1,
     "name": "Billetera",
     "description": "Billetera de cuero negro",
     "reference": "REF-005",
@@ -115,8 +116,8 @@ todos.then(function(result) {
     console.log(result) 
 })*/
 
-//const guardado = producto1.save(productos)
-//guardado.then((result) => console.log(result));
+const guardado = producto1.save(productos)
+guardado.then((result) => console.log(result));
 
 //const id1 = producto1.getById(1);
 //id1.then((result) => console.log(result, "resoltado"));
