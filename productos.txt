@@ -1,12 +1,1 @@
-[{
-    "id": 1,
-    "name": "Billetera",
-    "description": "Billetera de cuero negro",
-    "reference": "REF-005",
-    "status": "inactive",
-    "inventory": {
-        "unit": "piece",
-        "availableQuantity": 150,
-        "unitCost": 560,
-        "initialQuantity": 320,
-    }}]
+[{"id":2,"name":"Billetera","description":"Billetera de cuero negro","reference":"REF-005","status":"inactive","inventory":{"unit":"piece","availableQuantity":150,"unitCost":560,"initialQuantity":320}},2]
