@@ -14,16 +14,20 @@ const PORT = 8080
 const server = app.listen(PORT, () =>
     console.log("servidor corriendo"))
 
-const data = new Contenedor('productos.txt');
-const todo = data.getAll();
+const data = new Contenedor('productos.txt')
+const todo = data.getAll()
+
+
+//const randomItem = todo[Math.floor(Math.random() * todo.length)];
+//console.log(randomItem, "este es el random")
 
 
 server.on("error", (error) => console.log(`error en el servidor ${error}`))
 
-app.get('/product', (req, resp) => {
-    resp.send(todo)
+app.get('/productos', (req, resp) => {
+    todo.then((result) => resp.send(result))
 })
 
-app.get('/roductoRamdom', (req, resp) => {
-    resp.send("mundo")
+app.get('/productosRandom', (req, resp) => {
+    todo.then((result) => resp.send(result[Math.floor(Math.random() * result.length)]))
 })

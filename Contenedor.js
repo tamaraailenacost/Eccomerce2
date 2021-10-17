@@ -112,7 +112,7 @@ const productos = {
 }
 module.exports = { Contenedor }
 
-producto1 = new Contenedor();
+//producto1 = new Contenedor();
 /*const todos = producto1.getAll();
 todos.then(function(result) {
     console.log(result) 
@@ -121,8 +121,8 @@ todos.then(function(result) {
 //const guardado = producto1.save(productos)
 //guardado.then((result) => console.log(result));
 
-const id1 = producto1.getById(4);
-id1.then((result) => console.log(result, "resoltado"));
+//const id1 = producto1.getById(4);
+//id1.then((result) => console.log(result, "resoltado"));
 
 //const id1 = producto1.deleteById(1);
 //id1.then((result) => console.log(result, "resUltado"));
