@@ -11,7 +11,7 @@ const router = Router()
 const { Contenedor } = require('../../Contenedor')
 
 
-const data = new Contenedor('productos.txt')
+const data = new Contenedor('../../productos.txt')
 
 
 
@@ -22,7 +22,7 @@ router.get('/', (req, res) => {
 })
 
 
-router.get('/:id', (req, res) => {
+/*router.get('/:id', (req, res) => {
     let todo = data.getById(1)
     todo.then((result) => resp.send(result))
 })
@@ -41,7 +41,7 @@ router.put('/:id', (req, res) => {
 router.delete('/:id', (req, res) => {
     let todo = data.deleteById(1)
     todo.then((result) => resp.send(result))
-})
+})*/
 
 
 module.exports = router
