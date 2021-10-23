@@ -25,9 +25,15 @@ router.get('/', async(req, res) => {
 })
 
 
-router.get('/:id', (req, resp) => {
-    const todo = data.getById(1)
-    todo.then((result) => resp.send(result))
+router.get('/:id', async(req, res) => {
+    try {
+        const id = req.query
+            //const product = await data.getById(id)
+        res.json(id)
+    } catch (error) {
+        res.send(error)
+    }
+
 })
 
 
