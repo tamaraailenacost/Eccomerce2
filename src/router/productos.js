@@ -15,22 +15,26 @@ const data = new Contenedor('../../productos.txt')
 
 
 
-router.get('/', (req, res) => {
-    let todo = data.getAll()
-    todo.then((result) => resp.send(result))
-    todo.catch((err) => resp.send(err))
+router.get('/', async(req, res) => {
+    try {
+        let todo = await data.getAll()
+        res.send(todo)
+    } catch (error) {
+        res.send(error)
+    }
 })
 
 
-/*router.get('/:id', (req, res) => {
-    let todo = data.getById(1)
+router.get('/:id', (req, resp) => {
+    const todo = data.getById(1)
     todo.then((result) => resp.send(result))
 })
 
 
 
 router.post('', (req, res) => {
-    res.send('ok post')
+    const { title, price } = req.body
+    res.send('ok post', body)
 })
 
 
@@ -40,8 +44,8 @@ router.put('/:id', (req, res) => {
 
 router.delete('/:id', (req, res) => {
     let todo = data.deleteById(1)
-    todo.then((result) => resp.send(result))
-})*/
+    todo.then((result) => res.send(result))
+})
 
 
 module.exports = router
