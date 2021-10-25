@@ -2,6 +2,7 @@ const express = require('express');
 const router = require('./router/productos.js');
 
 
+
 class Server {
 
 
@@ -42,8 +43,6 @@ class Server {
         this.app.use('/api/productos', router)
 
     }
-
-
 
 
 }

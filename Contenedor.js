@@ -78,9 +78,9 @@ class Contenedor {
     deleteById = async(ID) => {
 
         try {
+            let id = parseInt(ID)
             const productos = await this.getAll();
-            const prods = productos.filter(p => p.id !== ID);
-            //console.log(prods)
+            const prods = productos.filter(p => p.id !== id);
             await fs.promises.writeFile(this.ruta, JSON.stringify(prods, null, 2))
         } catch (error) {
             throw error;

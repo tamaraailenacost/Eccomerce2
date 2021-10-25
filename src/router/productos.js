@@ -6,9 +6,13 @@
 //DELETE elimina un producto segun si ID
 //Para el caso de que un producto no exista se devolvera el objeto  { error: "producto no encontrado"}
 
-const { Router } = require('express')
+const { Router, response } = require('express')
+const multer = require('multer')
 const router = Router()
 const { Contenedor } = require('../../Contenedor')
+const upload = multer({ dest: 'uploads/' })
+
+
 
 
 const data = new Contenedor('../../productos.txt')
@@ -37,20 +41,45 @@ router.get('/:id', async(req, res) => {
 })
 
 
+router.post('/', upload.single('miArchivo'), async(req, res) => {
+    // req.file is the `avatar` file
+    // req.body will hold the text fields, if there were any
+    let file = req.file
+    let { title, price } = req.body
+    let newProduct = {
+        "title": title,
+        "price": price,
+        "image": req.file
+    }
+    if (!file) {
+        let error = new Error('Error subiendo archivo')
+        error.httpStatusCode = 400
+        throw new Error
+    }
+    try {
+        let id = await data.save(newProduct)
+        res.send(`Archivo <b>${file.originalname}</b> subido exitosamente id: ${id}`)
 
-router.post('', (req, res) => {
-    const { title, price } = req.body
-    res.send('ok post', body)
+
+    } catch (err) {
+        throw new Error
+    }
 })
+
 
 
 router.put('/:id', (req, res) => {
     res.send('ok put')
 })
 
-router.delete('/:id', (req, res) => {
-    let todo = data.deleteById(1)
-    todo.then((result) => res.send(result))
+router.delete('/:id', async(req, res) => {
+    try {
+        const id = req.params.id
+        const product = await data.deleteById(id)
+        res.json(`el producto ${id} fue eliminanod con éxito!`)
+    } catch (error) {
+        res.json(error, "producto no encontrado")
+    }
 })
 
 
