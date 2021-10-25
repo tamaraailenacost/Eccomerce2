@@ -27,9 +27,9 @@ router.get('/', async(req, res) => {
 
 router.get('/:id', async(req, res) => {
     try {
-        const id = req.query
-            //const product = await data.getById(id)
-        res.json(id)
+        const id = req.params.id
+        const product = await data.getById(id)
+        res.json(product)
     } catch (error) {
         res.send(error)
     }

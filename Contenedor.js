@@ -38,7 +38,8 @@ class Contenedor {
 
         const productos = await this.getAll();
         try {
-            const productoId = productos.find(p => p.id === ID);
+            let id = parseInt(ID)
+            const productoId = productos.find(p => p.id === id);
             if (productoId === undefined) {
                 return null;
             }
