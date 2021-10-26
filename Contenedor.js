@@ -7,6 +7,26 @@ class Contenedor {
         this.ruta = './productos.txt';
     }
 
+    //update un producto a traves del formulario.
+    update = async(producto) => {
+
+        try {
+            const productos = await this.getAll();
+            ID = parseInt(producto.id)
+            const prods = productos.filter(p => p.id !== ID);
+            prods.push(producto)
+            await fs.promises.writeFile(this.ruta, JSON.stringify(prods, null, 2))
+            return 'producto actualizado'
+
+
+        } catch (error) {
+            console.log("El archivo esta vacio o no pudo ser leido", error);
+            throw error;
+        }
+
+
+    }
+
     // Recibe un Objeto, lo guarda en el archivo y devuelve el ID asignado,
     // el ID debe ser numerico y debe ser siempre mayor al anterior y no repetirse.
     save = async(producto) => {

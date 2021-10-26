@@ -68,9 +68,24 @@ router.post('/', upload.single('miArchivo'), async(req, res) => {
 
 
 
-router.put('/:id', (req, res) => {
-    res.send('ok put')
+router.put('/', async(req, res) => {
+    let newProduct = req.query
+
+    try {
+        const ID = parseInt(newProduct.id)
+        const respuesta = await data.getById(ID)
+        if (!respuesta) {
+            res.send(`No existe un producto con el ID ${newProduct.id} en el archivo`)
+        }
+        await data.update(newProduct)
+        res.json(product)
+
+    } catch (err) {
+        throw new Error
+    }
 })
+
+
 
 router.delete('/:id', async(req, res) => {
     try {
