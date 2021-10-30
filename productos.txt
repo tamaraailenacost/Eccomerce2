@@ -14,10 +14,14 @@
     },
     "id": 1
   },
-  {},
   {
     "id": "2",
     "title": "tamara",
     "price": "300000"
+  },
+  {
+    "id": "1",
+    "title": "armoica",
+    "price": "20000000"
   }
 ]

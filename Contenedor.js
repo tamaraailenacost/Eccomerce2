@@ -8,24 +8,20 @@ class Contenedor {
     }
 
     //update un producto a traves del formulario.
-    update = async(producto) => {
+    update = async(idProducto, newProduct) => {
 
         try {
-            const productos = await this.getAll();
-            ID = parseInt(producto.id)
-            const prods = productos.filter(p => p.id !== ID);
-            prods.push(producto)
-            await fs.promises.writeFile(this.ruta, JSON.stringify(prods, null, 2))
-            return 'producto actualizado'
-
-
+            const productos = await this.getAll()
+            const indexId = productos.findIndex(({ id }) => id === idProducto);
+            if (indexId === -1) return null;
+            productos.splice(indexId, 1, newProduct);
+            await fs.promises.writeFile(this.ruta, JSON.stringify(productos, null, 2), "utf-8");
         } catch (error) {
-            console.log("El archivo esta vacio o no pudo ser leido", error);
-            throw error;
+            console.log("Hubo un error: ", error);
         }
 
-
     }
+
 
     // Recibe un Objeto, lo guarda en el archivo y devuelve el ID asignado,
     // el ID debe ser numerico y debe ser siempre mayor al anterior y no repetirse.
