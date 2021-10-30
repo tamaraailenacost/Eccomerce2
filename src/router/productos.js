@@ -13,8 +13,6 @@ const { Contenedor } = require('../../Contenedor')
 const upload = multer({ dest: 'uploads/' })
 
 
-
-
 const data = new Contenedor('../../productos.txt')
 
 
