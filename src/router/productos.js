@@ -80,7 +80,9 @@ router.put("/:id", async(req, res) => {
 });
 
 
-
+// delete y update no estan funcionando bien revisar
+//crear un error handler
+// revisar que la funcion delete bt id tiene que retoranr objeto no encontrado si no esta el id
 router.delete('/:id', async(req, res) => {
     try {
         const id = req.params.id
