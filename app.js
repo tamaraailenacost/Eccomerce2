@@ -11,4 +11,5 @@ server.app.set('view engine', 'handlebars');
 
 server.app.get('/', function(req, res) {
     res.render('index');
+
 });
