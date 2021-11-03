@@ -3,12 +3,12 @@ const { Server } = require('./src/Server')
 const server = new Server()
 
 //Handlebars
-const handlebars = require('express-handlebars');
+const exphbs = require('express-handlebars');
 
-server.app.engine('handlebars', handlebars());
+server.app.engine('handlebars', exphbs());
 server.app.set('view engine', 'handlebars');
+//server.app.set('views', './views');
 
 server.app.get('/', function(req, res) {
-    res.render('index');
-
+    res.render('content');
 });

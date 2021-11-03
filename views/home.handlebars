@@ -1,0 +1,32 @@
+
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <h4 class="card-title">Add your producto information here!</h4>
+                                <form action="/api/productos" enctype="multipart/form-data" method="POST">
+                                  <div class="form-group">
+                                        <label>Percent</label>
+                                        <input type="text" placeholder="title" data-mask="99%" class="form-control" id="name" name="title">
+                                        <span class="font-13 text-muted">e.g "Notebook 4G"</span> 
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Currency</label>
+                                        <input type="text" placeholder="price" data-mask="$ 999,999,999.99" class="form-control" id="price" name="price">
+                                        <span class="font-13 text-muted">$ </span> 
+                                    </div>
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <h4 class="card-title">File Upload</h4>
+                                            <label for="input-file-now">Upload a picture of your product</label>
+                                            <input type="file" name="miArchivo"  id="input-file-now" class="dropify" />
+                                        </div>
+                                    </div>
+                                    
+                                    <input type="submit" value="Send information" />
+                                  
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
