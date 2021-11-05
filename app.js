@@ -9,6 +9,11 @@ server.app.engine('handlebars', exphbs());
 server.app.set('view engine', 'handlebars');
 //server.app.set('views', './views');
 
-server.app.get('/', function(req, res) {
+/*server.app.get('/', function(req, res) {
     res.render('content');
+});
+*/
+
+server.app.get('/', function(req, res) {
+    res.render('home');
 });

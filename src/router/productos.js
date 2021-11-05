@@ -20,7 +20,8 @@ const data = new Contenedor('../../productos.txt')
 router.get('/', async(req, res) => {
     try {
         let todo = await data.getAll()
-        res.send(todo)
+            //res.send(todo)
+        res.render('content', { todo })
     } catch (error) {
         res.send(error)
     }
@@ -56,7 +57,7 @@ router.post('/', upload.single('miArchivo'), async(req, res) => {
     }
     try {
         let id = await data.save(newProduct)
-        res.send(`Archivo <b>${file.originalname}</b> subido exitosamente id: ${id}`)
+        res.redirect('/api/productos')
 
 
     } catch (err) {
