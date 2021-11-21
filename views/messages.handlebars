@@ -1,0 +1,38 @@
+<body>
+    <h1>Cliente Websockets</h1>
+
+    <input type="text">
+    <button>Enviar</button>
+    <p></p>
+    <div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Messages: </h4>    
+                <div class="table-responsive m-t-40">
+                    {{#if messages}}
+                    <table id="myTable" class="table table-bordered table-striped" {{#each todo}}>
+                        <thead>
+                            <tr>
+                                <th>user</th>
+  
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>{{title }}</td>
+                    
+                            </tr>
+                        </tbody{{/each}} >
+                    </table>
+                    {{else}}
+                    <p class="empty">There is no products here!</p>
+                    {{/if}}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+
+</html>

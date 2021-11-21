@@ -1,10 +1,13 @@
 const fs = require('fs');
+const knex = require('knex');
 
 class Contenedor {
 
-    constructor() {
+    constructor(config, table) {
 
-        this.ruta = './productos.txt';
+        //this.ruta = './productos.txt';
+        this.table = table;
+        this.conexion = knex(config)
     }
 
     //update un producto a traves del formulario.
@@ -23,9 +26,21 @@ class Contenedor {
     }
 
 
+    save = async(producto) => {
+        try {
+            const [id] = await this.conexion(this.table).insert(producto);
+            return id
+        } catch (error) {
+            console.log('error: ', error);
+            throw error;
+        } finally {
+            /* knex.destroy(); */
+        }
+    }
+
     // Recibe un Objeto, lo guarda en el archivo y devuelve el ID asignado,
     // el ID debe ser numerico y debe ser siempre mayor al anterior y no repetirse.
-    save = async(producto) => {
+    /*save = async(producto) => {
 
         try {
 
@@ -45,7 +60,7 @@ class Contenedor {
         }
 
 
-    }
+    }*/
 
 
 

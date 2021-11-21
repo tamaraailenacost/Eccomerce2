@@ -20,8 +20,13 @@ const data = new Contenedor('../../productos.txt')
 router.get('/', async(req, res) => {
     try {
         let todo = await data.getAll()
+        console.log(todo)
             //res.send(todo)
-        res.render('content', { todo })
+        if (todo) {
+            res.json(todo)
+        }
+        res.json('no hay productos para mostrar')
+
     } catch (error) {
         res.send(error)
     }
