@@ -1,14 +1,28 @@
-const fs = require('fs');
-const knex = require('knex');
+const fs = require('fs')
+const knexLib = require('knex');
 
 class Contenedor {
 
-    constructor(config, table) {
+    constructor(config) {
 
         //this.ruta = './productos.txt';
-        this.table = table;
-        this.conexion = knex(config)
+        this.knex = knexLib(config)
     }
+
+    //crear tabla 
+    crearTabla = () => {
+        return this.knex.schema.dropTableIfExists('productos')
+            .finally(() => {
+                return this.knex.schema.createTable('productos', table => {
+                    table.increments('idProd').primary()
+                    table.string('title', 50).notNullable()
+                    table.string('image', 50).notNullable()
+                    table.float('price')
+                    table.integer('stock')
+                })
+            })
+    }
+
 
     //update un producto a traves del formulario.
     update = async(idProducto, newProduct) => {
@@ -28,13 +42,53 @@ class Contenedor {
 
     save = async(producto) => {
         try {
-            const [id] = await this.conexion(this.table).insert(producto);
-            return id
+            return this.knex.from('productos').insert(producto)
         } catch (error) {
             console.log('error: ', error);
             throw error;
         } finally {
-            /* knex.destroy(); */
+            this.knex.destroy();
+        }
+    }
+
+    getAll = async() => {
+        try {
+            return this.knex.from('productos').select('*')
+        } catch (err) {
+            console.log('hubo un error', err)
+            throw err
+        } finally {
+            this.knex.destroy()
+        }
+    }
+
+    getById = async(ID) => {
+
+
+        try {
+            return this.knex.from('productos').where('idProd', ID).select('*')
+            return productoId;
+
+        } catch (error) {
+            console.log("El archivo esta vacio o no pudo ser leido", error);
+            throw error;
+
+        } finally {
+            this.knex.destroy()
+        }
+
+    }
+
+    deleteById = async(ID) => {
+
+        try {
+            let id = parseInt(ID)
+            return this.knex.from('productos').where('idProd', id).del()
+        } catch (error) {
+            console.log(err)
+            throw error;
+        } finally {
+            this.knex.destroy()
         }
     }
 
@@ -64,7 +118,7 @@ class Contenedor {
 
 
 
-    //Recibe un id y retorna el objeto con ese ID o NULL si no esta.
+    /*Recibe un id y retorna el objeto con ese ID o NULL si no esta.
     getById = async(ID) => {
 
         const productos = await this.getAll();
@@ -82,10 +136,10 @@ class Contenedor {
         }
 
     }
+    */
 
 
-
-    // Devuelve un Array con todos los objetos en el archivo.
+    /*Devuelve un Array con todos los objetos en el archivo.
     getAll = async() => {
         try {
             const allproducts = await fs.promises.readFile(this.ruta, 'utf-8');
@@ -100,12 +154,12 @@ class Contenedor {
 
 
         }
-    }
+    }*/
 
 
 
 
-    // Elimina el objeto con el id buscado.
+    /* Elimina el objeto con el id buscado.
     deleteById = async(ID) => {
 
         try {
@@ -116,7 +170,7 @@ class Contenedor {
         } catch (error) {
             throw error;
         }
-    }
+    }*/
 
 
 
@@ -125,38 +179,12 @@ class Contenedor {
         return await fs.promises.writeFile(this.ruta, JSON.stringify([], null, 2));
     }
 
-
-}
-
-
-const productos = {
-    "name": "Billetera",
-    "description": "Billetera de cuero negro",
-    "reference": "REF-005",
-    "status": "inactive",
-    "inventory": {
-        "unit": "piece",
-        "availableQuantity": 150,
-        "unitCost": 560,
-        "initialQuantity": 320,
+    close() {
+        this.knex.destroy();
     }
 
+
 }
+
+
 module.exports = { Contenedor }
-
-//producto1 = new Contenedor();
-/*const todos = producto1.getAll();
-todos.then(function(result) {
-    console.log(result) 
-})*/
-
-//const guardado = producto1.save(productos)
-//guardado.then((result) => console.log(result));
-
-//const id1 = producto1.getById(4);
-//id1.then((result) => console.log(result, "resoltado"));
-
-//const id1 = producto1.deleteById(1);
-//id1.then((result) => console.log(result, "resUltado"));
-
-//producto1.deleteAll();

@@ -6,14 +6,30 @@
 //DELETE elimina un producto segun si ID
 //Para el caso de que un producto no exista se devolvera el objeto  { error: "producto no encontrado"}
 
+//Router Express
 const { Router, response } = require('express')
-const multer = require('multer')
 const router = Router()
-const { Contenedor } = require('../../Contenedor')
+
+//lectura de archivos
+const multer = require('multer')
 const upload = multer({ dest: 'uploads/' })
 
+//Contenedor
+const { Contenedor } = require('../../Contenedor')
 
-const data = new Contenedor('../../productos.txt')
+
+//DB
+const { knexMariaDB, knexSqlite3 } = require('../../DB/options')
+
+
+const data = new Contenedor(knexMariaDB)
+
+data.crearTabla()
+    .then(() => {
+        console.log("1) tabla creada")
+    })
+
+
 
 
 
@@ -21,7 +37,6 @@ router.get('/', async(req, res) => {
     try {
         let todo = await data.getAll()
         console.log(todo)
-            //res.send(todo)
         if (todo) {
             res.json(todo)
         }
@@ -56,17 +71,15 @@ router.post('/', upload.single('miArchivo'), async(req, res) => {
         "image": req.file
     }
     if (!file) {
-        let error = new Error('Error subiendo archivo')
         error.httpStatusCode = 400
         throw new Error
     }
     try {
-        let id = await data.save(newProduct)
-        res.redirect('/api/productos')
+        await data.save(newProduct)
 
 
     } catch (err) {
-        throw new Error
+        throw err
     }
 })
 
@@ -90,10 +103,10 @@ router.put("/:id", async(req, res) => {
 router.delete('/:id', async(req, res) => {
     try {
         const id = req.params.id
-        const product = await data.deleteById(id)
-        res.json(`el producto ${id} fue eliminanod con éxito!`)
+        await data.deleteById(id)
+        res.send(`el producto ${id} fue eliminanod con éxito!`)
     } catch (error) {
-        res.json(error, "producto no encontrado")
+        res.send(error, "producto no encontrado")
     }
 })
 

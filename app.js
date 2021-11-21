@@ -1,11 +1,15 @@
 const { Server } = require('./src/Server')
 
+// Contenedor
+const { Contenedor } = require('./Contenedor');
+
 const server = new Server()
+
+
 
 
 //Handlebars
 const exphbs = require('express-handlebars');
-
 server.app.engine('handlebars', exphbs());
 server.app.set('view engine', 'handlebars');
 
