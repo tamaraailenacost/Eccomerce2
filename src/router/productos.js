@@ -63,20 +63,22 @@ router.get('/:id', async(req, res) => {
 router.post('/', upload.single('miArchivo'), async(req, res) => {
     // req.file is the `avatar` file
     // req.body will hold the text fields, if there were any
-    let file = req.file
-    let { title, price } = req.body
-    let newProduct = {
-        "title": title,
-        "price": price,
-        "image": req.file
-    }
-    if (!file) {
+    if (!req.file) {
         error.httpStatusCode = 400
         throw new Error
     }
+    let url = req.file.originalname
+    let { title, price, stock } = req.body
+    let newProduct = {
+        "title": title,
+        "image": url,
+        "price": price,
+        "stock": stock,
+    }
+    console.log(newProduct)
     try {
         await data.save(newProduct)
-
+        res.json("producto agregado")
 
     } catch (err) {
         throw err
@@ -86,10 +88,9 @@ router.post('/', upload.single('miArchivo'), async(req, res) => {
 
 
 router.put("/:id", async(req, res) => {
-    const updateProduct = req.body;
+    const { stock } = req.body;
     const id = Number(req.params.id);
-    updateProduct.id = id;
-    const updating = await data.update(id, updateProduct);
+    const updating = await data.update(id, stock);
     if (updating === null) return res.send({ error: "cannot find product" });
     res.send({
         message: "product updated"
