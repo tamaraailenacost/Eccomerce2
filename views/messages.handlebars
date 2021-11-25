@@ -34,5 +34,24 @@
     </div>
 </div>
 </body>
+<script>
+    const socket = io()
 
+    socket.on('msgDelServer', msg => {
+        alert(msg)
+        // msgs.push(msg)
+        // document.getElementById('texto').innerHTML = msgs.join('<br>')
+    })
+
+    socket.on('chequeo', msg => {
+        console.log('chequeando....todo bien')
+        socket.emit('chequeo', 'ok')
+    })
+
+    socket.on('spam', msg => {
+        console.log(`SPAM: ${msg}`)
+        document.getElementById('texto').innerHTML = 'llegó un mensaje'
+    })
+
+</script>
 </html>

@@ -11,7 +11,6 @@ const { Server: IOServer } = require('socket.io');
 
 
 
-
 class Server {
 
 
@@ -38,7 +37,7 @@ class Server {
             console.log('Nuevo cliente conectado!')
 
             /* Envio los mensajes al cliente que se conectó */
-            socket.emit('mensajes', mensajes)
+            //socket.emit('mensajes', mensajes)
 
             /* Escucho los mensajes enviado por el cliente y se los propago a todos 
             socket.on('mensaje', data => {
@@ -47,7 +46,6 @@ class Server {
             })*/
         })
 
-
         //Socket IO
         // Arrancamos el servidor con http.listen() y NO con app.listen()
 
@@ -55,8 +53,6 @@ class Server {
             console.log(`Servidor escuchando en el puerto`))
         server.on("error", (error) =>
             console.log(`Error en servidor ${error}`))
-
-
 
     }
 
@@ -77,7 +73,7 @@ class Server {
     routing = () => {
 
         this.app.use('/api/productos', router)
-        this.app.use('/messages', routerMessage)
+        this.app.use('/api/mensajes', routerMessage)
 
     }
 
