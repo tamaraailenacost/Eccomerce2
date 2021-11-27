@@ -11,8 +11,10 @@ const knexMariaDB = {
 const knexSqlite3 = {
     client: 'sqlite3',
     connection: {
-        filename: "./mydb.sqlite"
-    }
+        filename: "./test.sqlite"
+    },
+    useNullAsDefault: true
 }
+
 
 module.exports = { knexSqlite3, knexMariaDB }

@@ -9,7 +9,7 @@ const routerMessage = require('./router/mensajes.js');
 const { Server: HttpServer } = require('http')
 const { Server: IOServer } = require('socket.io');
 
-
+const mensajes = []
 
 class Server {
 
@@ -37,18 +37,17 @@ class Server {
             console.log('Nuevo cliente conectado!')
 
             /* Envio los mensajes al cliente que se conectó */
-            //socket.emit('mensajes', mensajes)
+            socket.emit('mensajes', mensajes)
 
-            /* Escucho los mensajes enviado por el cliente y se los propago a todos 
+            /* Escucho los mensajes enviado por el cliente y se los propago a todos */
             socket.on('mensaje', data => {
                 mensajes.push({ socketid: socket.id, mensaje: data })
-                io.sockets.emit('mensajes', mensajes)
-            })*/
+                this.io.sockets.emit('mensajes', mensajes)
+            })
         })
 
         //Socket IO
         // Arrancamos el servidor con http.listen() y NO con app.listen()
-
         const server = this.httpServer.listen(this.port, () =>
             console.log(`Servidor escuchando en el puerto`))
         server.on("error", (error) =>

@@ -1,6 +1,8 @@
+<head>
+    <script src="/socket.io/socket.io.js"></script>
+</head>
 <body>
     <h1>Cliente Websockets</h1>
-
     <input type="text">
     <button>Enviar</button>
     <p></p>
@@ -8,50 +10,27 @@
     <div class="col-12">
         <div class="card">
             <div class="card-body">
-                <h4 class="card-title">Messages: </h4>    
-                <div class="table-responsive m-t-40">
-                    {{#if messages}}
-                    <table id="myTable" class="table table-bordered table-striped" {{#each todo}}>
-                        <thead>
-                            <tr>
-                                <th>user</th>
-  
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>{{title }}</td>
-                    
-                            </tr>
-                        </tbody{{/each}} >
-                    </table>
-                    {{else}}
-                    <p class="empty">There is no products here!</p>
-                    {{/if}}
-                </div>
+                <h4 class="card-title" id="msj">Messages: </h4>    
             </div>
         </div>
     </div>
 </div>
 </body>
 <script>
-    const socket = io()
+const socket = io();
+const input = document.querySelector('input')
+document.querySelector('button').addEventListener('click', () => {
+    socket.emit('mensaje', input.value);
+})
 
-    socket.on('msgDelServer', msg => {
-        alert(msg)
-        // msgs.push(msg)
-        // document.getElementById('texto').innerHTML = msgs.join('<br>')
-    })
+socket.on('mensajes', msjs => {
+    const mensajesHTML = msjs
+        .map(msj => `SocketId: ${msj.socketid} -> Mensaje: ${msj.mensaje}`)
+        .join('<br>')
+    document.querySelector('p').innerHTML = mensajesHTML
+});
 
-    socket.on('chequeo', msg => {
-        console.log('chequeando....todo bien')
-        socket.emit('chequeo', 'ok')
-    })
 
-    socket.on('spam', msg => {
-        console.log(`SPAM: ${msg}`)
-        document.getElementById('texto').innerHTML = 'llegó un mensaje'
-    })
 
 </script>
 </html>
