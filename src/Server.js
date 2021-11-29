@@ -46,10 +46,6 @@ class Server {
                 console.log(mensajes)
                 this.io.emit("sendMensaje", mensajes);
             })
-
-            //Envio los mensajes al cliente que se conectó
-            //const mensajes = getMessages()
-            //socket.emit('mensajes', mensajes)
         })
 
     }
