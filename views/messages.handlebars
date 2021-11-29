@@ -2,35 +2,34 @@
     <script src="/socket.io/socket.io.js"></script>
 </head>
 <body>
+<div>
     <h1>Cliente Websockets</h1>
-    <input type="text">
-    <button>Enviar</button>
+    <input id="input" value="tamara" type="text"/>
+    <button id="enviar">Enviar</button>
     <p></p>
-    <div class="row">
-    <div class="col-12">
-        <div class="card">
-            <div class="card-body">
-                <h4 class="card-title" id="msj">Messages: </h4>    
-            </div>
-        </div>
-    </div>
 </div>
 </body>
 <script>
 const socket = io();
-const input = document.querySelector('input')
-document.querySelector('button').addEventListener('click', () => {
-    socket.emit('mensaje', input.value);
+const input = document.querySelector('#input');
+const enviar =document.querySelector('#enviar');
+
+enviar.addEventListener('click', () => {
+    const data =  {
+        "message": input.value,
+        "author": ""
+    }
+    socket.emit('sendMensaje', data);
+    
 })
 
-socket.on('mensajes', msjs => {
+socket.on('sendMensaje', (msjs) => {
+    console.log(msjs, "servidor dice")
     const mensajesHTML = msjs
-        .map(msj => `SocketId: ${msj.socketid} -> Mensaje: ${msj.mensaje}`)
+       .map(msj => `  author ${msj.author}:    Mensaje: ${msj.message}`)
         .join('<br>')
-    document.querySelector('p').innerHTML = mensajesHTML
+    document.querySelector('p').innerHTML = mensajesHTML;
 });
-
-
 
 </script>
 </html>

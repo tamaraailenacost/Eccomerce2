@@ -8,16 +8,9 @@ const { knexMariaDB, knexSqlite3 } = require('../../DB/options')
 //saveMessages
 const { Messages } = require('../../saveMessages')
 
-//socket IO
-const { Server: HttpServer } = require('http')
-const { Server: IOServer } = require('socket.io')
-
-
-const httpServer = new HttpServer(routerMessage)
-const io = new IOServer(httpServer)
 
 //saveMessages
-const data = new Messages(knexSqlite3)
+const data = new Messages(knexMariaDB)
 
 
 data.crearTabla()
@@ -26,33 +19,40 @@ data.crearTabla()
     })
 
 
-routerMessage.get('/', async(req, res) => {
+// Obtiene todos los mensajes
+const getMessages = async() => {
+        try {
+            const msj = await data.getMessages()
+            return msj
+        } catch (error) {
+            console.log("mensajes vacios")
+            throw error
+        }
+    }
+    // Guarda los mensajes
+const saveMessages = async(message) => {
+    try {
+        const saveMessage = await data.saveMessages(message);
+        return saveMessage
+    } catch (error) {
+        throw error
+    }
+}
+
+routerMessage.get('/', (req, res) => {
 
     try {
-        const message = await data.getMessages()
-        res.render('messages', message)
+
+        res.render('messages')
     } catch (error) {
         res.send(error)
         throw error
     }
 })
 
-routerMessage.post('/', async(req, res) => {
-
-    socket.on('mensaje', data => {
-        io.sockets.emit('mensajes', data)
-    })
-    try {
-        const message = await data.saveMessages(message)
-        res.render('messages', message)
-    } catch (error) {
-        res.send(error)
-        throw error
-    }
-})
-
-
-
-
-
-module.exports = routerMessage
+// Exportando
+module.exports = {
+    getMessages,
+    saveMessages,
+    routerMessage
+}

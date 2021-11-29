@@ -2,14 +2,13 @@ const express = require('express');
 
 //router
 const router = require('./router/productos.js');
-const routerMessage = require('./router/mensajes.js');
+const { getMessages, saveMessages, routerMessage } = require('./router/mensajes')
 
 
 //Socket IO
 const { Server: HttpServer } = require('http')
 const { Server: IOServer } = require('socket.io');
 
-const mensajes = []
 
 class Server {
 
@@ -24,27 +23,39 @@ class Server {
 
         // function
         this.starting()
+        this.socket()
         this.middleware()
         this.routing()
 
+
     }
 
-
-
-    starting = () => {
+    socket = () => {
 
         this.io.on('connection', socket => {
             console.log('Nuevo cliente conectado!')
 
-            /* Envio los mensajes al cliente que se conectó */
-            socket.emit('mensajes', mensajes)
 
-            /* Escucho los mensajes enviado por el cliente y se los propago a todos */
-            socket.on('mensaje', data => {
-                mensajes.push({ socketid: socket.id, mensaje: data })
-                this.io.sockets.emit('mensajes', mensajes)
+            //Escucho los mensajes enviado por el cliente y se los propago a todos
+            socket.on('sendMensaje', async(data) => {
+                //console.log(data);
+                const save = await saveMessages(data);
+
+                //enviamos nuevamente los mensajes
+                const mensajes = await getMessages();
+                console.log(mensajes)
+                this.io.emit("sendMensaje", mensajes);
             })
+
+            //Envio los mensajes al cliente que se conectó
+            //const mensajes = getMessages()
+            //socket.emit('mensajes', mensajes)
         })
+
+    }
+
+
+    starting = () => {
 
         //Socket IO
         // Arrancamos el servidor con http.listen() y NO con app.listen()
