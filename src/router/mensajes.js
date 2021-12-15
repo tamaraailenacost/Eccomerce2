@@ -6,34 +6,41 @@ const routerMessage = Router()
 const { knexMariaDB, knexSqlite3 } = require('../../DB/options')
 
 //saveMessages
-const { Messages } = require('../../saveMessages')
+//const { Messages } = require('../../saveMessages')
+const Mensaje = require('../../mensajeSchema')
 
 
 //saveMessages
-const data = new Messages(knexMariaDB)
+//const data = new Messages(knexMariaDB)
 
 
-data.crearTabla()
+/*data.crearTabla()
     .then(() => {
         console.log("2) tabla creada")
-    })
+    })*/
 
 
 // Obtiene todos los mensajes
 const getMessages = async() => {
-        try {
-            const msj = await data.getMessages()
-            return msj
-        } catch (error) {
-            console.log("mensajes vacios")
-            throw error
-        }
+    try {
+        //const msj = await data.getMessages()
+        const msj = await Mensaje.find()
+        return msj
+    } catch (error) {
+        console.log("mensajes vacios")
+        throw error
     }
-    // Guarda los mensajes
+}
+
+
+// Guarda los mensajes
 const saveMessages = async(message) => {
     try {
-        const saveMessage = await data.saveMessages(message);
-        return saveMessage
+
+        console.log(message)
+            //const saveMessage = await data.saveMessages(message);
+        const saveMessage = new Mensaje(message)
+        await saveMessage.save()
     } catch (error) {
         throw error
     }

@@ -3,11 +3,15 @@ const express = require('express');
 //router
 const router = require('./router/productos.js');
 const { getMessages, saveMessages, routerMessage } = require('./router/mensajes')
+const routerTest = require('./router/productos-test')
 
 
 //Socket IO
 const { Server: HttpServer } = require('http')
 const { Server: IOServer } = require('socket.io');
+
+//MongoDB
+const { MongoConnection } = require('../DB/MongoDb')
 
 
 class Server {
@@ -24,6 +28,7 @@ class Server {
         // function
         this.starting()
         this.socket()
+        this.dbconecction()
         this.middleware()
         this.routing()
 
@@ -62,6 +67,10 @@ class Server {
 
     }
 
+    dbconecction = async() => {
+        await MongoConnection()
+    }
+
     middleware = () => {
 
 
@@ -80,6 +89,7 @@ class Server {
 
         this.app.use('/api/productos', router)
         this.app.use('/api/mensajes', routerMessage)
+        this.app.use('/api/productos-test', routerTest)
 
     }
 
