@@ -13,6 +13,20 @@ const { Server: IOServer } = require('socket.io');
 //MongoDB
 const { MongoConnection } = require('../DB/MongoDb')
 
+//Normalzer
+const { normalize, schema } = require("normalizr");
+
+// Define your schema
+const author = new schema.Entity('author', {}, { idAttribute: 'email' });
+
+
+// Define your message
+const mensajeEntity = new schema.Entity('mensajes', {
+    mensaje: data,
+    author: [author]
+});
+
+
 
 class Server {
 
@@ -46,9 +60,15 @@ class Server {
                 //console.log(data);
                 const save = await saveMessages(data);
 
-                //enviamos nuevamente los mensajes
+                //traigo los mensajes los mensajes
                 const mensajes = await getMessages();
                 console.log(mensajes)
+
+                //Normalzer
+                const normalizedData = normalize(mensajes, article)
+                console.log(normalizedData)
+
+                //enviamos nuevamente los mensajes
                 this.io.emit("sendMensaje", mensajes);
             })
         })
