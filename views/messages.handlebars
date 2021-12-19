@@ -2,6 +2,37 @@
     <script src="/socket.io/socket.io.js"></script>
 </head>
 <body>
+  <div class="mb-3">
+    <label for="exampleInputEmail1" class="form-label">Email address</label>
+    <input type="email" class="form-control" id="email" aria-describedby="emailHelp"/>
+  </div>
+  <div class="mb-3">
+    <label for="exampleInput" class="form-label">Name</label>
+    <input type="text" class="form-control" id="name"/>    
+  </div>
+   <div class="mb-3">
+    <label for="exampleInput" class="form-label">Surename</label>
+    <input type="text" class="form-control" id="surename"/>    
+  </div>
+  <div class="mb-3">
+    <label for="exampleInput" class="form-label"> Phone</label>
+    <input type="text" class="form-control" id="phone"/>    
+  </div>
+  <div class="mb-3">
+    <label for="exampleInput" class="form-label">Avatar link</label>
+    <input type="text" class="form-control" id="avatar"/>    
+  </div>
+  <div class="mb-3">
+    <label for="exampleInput" class="form-label">Alias</label>
+    <input type="text" class="form-control" id="alias"/>    
+  </div>
+  <div class="mb-3">
+    <label for="exampleInput" class="form-label">Write your message below</label>
+    <input type="text" class="form-control" value="Write your message here!"id="input"/>    
+  </div>
+  <button  id="enviar" class="btn btn-primary">Submit</button>
+  <p></p>
+<!--
 <div>
     <h1>Cliente Websockets</h1>
     <input id="input" value="tamara" type="text"/>
@@ -9,18 +40,32 @@
     <button id="enviar">Enviar</button>
     <p></p>
 </div>
+!-->
 </body>
 <script>
 const socket = io();
 const input = document.querySelector('#input');
 const enviar =document.querySelector('#enviar');
-const email =document.querySelector('#email');;
+const email =document.querySelector('#email');
+const name =document.querySelector('#name');
+const surename =document.querySelector('#surename');
+const phone = document.querySelector('#phone');
+const avatar = document.querySelector('#avatar');
+const alias = document.querySelector('#alias');
 
 enviar.addEventListener('click', () => {
     const data =  {
         "message": input.value,
-        "email": email.value
+        "author": {
+          "email": email.value,
+          "name": name.value,
+        "surename": surename.value,
+        "phone": phone.value,
+        "avatar": avatar.value,
+        "alias": alias.value 
+      }   
     }
+    console.log(data)
     socket.emit('sendMensaje', data);
     
 })

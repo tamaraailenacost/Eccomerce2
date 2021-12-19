@@ -12,15 +12,15 @@ const mensajeSchema = new Schema({
             type: String,
             required: true
         },
-        nombre: {
+        name: {
             type: String,
             required: false
         },
-        apellido: {
+        surename: {
             type: String,
             required: false
         },
-        edad: {
+        phone: {
             type: String,
             required: false
         },
