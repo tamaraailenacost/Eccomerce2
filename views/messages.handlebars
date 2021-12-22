@@ -56,14 +56,14 @@ const alias = document.querySelector('#alias');
 enviar.addEventListener('click', () => {
     const data =  {
         "message": input.value,
-        "author": {
+        "author": [{
           "email": email.value,
           "name": name.value,
         "surename": surename.value,
         "phone": phone.value,
         "avatar": avatar.value,
         "alias": alias.value 
-      }   
+      } ]  
     }
     console.log(data)
     socket.emit('sendMensaje', data);

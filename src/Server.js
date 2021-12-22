@@ -16,14 +16,6 @@ const { MongoConnection } = require('../DB/MongoDb')
 //Normalzer
 const { normalize, schema } = require("normalizr");
 
-// Define your schema
-const author = new schema.Entity('author', {}, { idAttribute: 'email' });
-
-
-// Define your message
-const mensajeEntity = new schema.Entity('mensajes', {
-    author: [author]
-});
 
 
 
@@ -56,14 +48,23 @@ class Server {
 
             //Escucho los mensajes enviado por el cliente y se los propago a todos
             socket.on('sendMensaje', async(data) => {
-                console.log(data);
                 const save = await saveMessages(data);
 
                 //traigo los mensajes los mensajes
                 const mensajes = await getMessages();
                 //console.log(mensajes)
 
-                //Normalzer
+                //Normalzr
+
+                // Define your schema
+                const author = new schema.Entity('author', {}, { idAttribute: 'email' });
+
+
+                // Define your message
+                const mensajeEntity = new schema.Entity('mensajes', {
+                    author: [author]
+                });
+
                 const normalizedData = normalize(mensajes, mensajeEntity)
                 console.log(normalizedData)
                 console.log(JSON.stringify(normalizedData).length)
