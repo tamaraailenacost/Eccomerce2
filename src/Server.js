@@ -1,4 +1,5 @@
 const express = require('express');
+const session = require('express-session')
 
 //router
 const router = require('./router/productos.js');
@@ -105,6 +106,14 @@ class Server {
             resp.status(500).send('Error Server')
         })
 
+        this.app.use(session({
+            secret: 'keyboard cat',
+            resave: false,
+            cookie: {
+                httpOnly: true,
+                maxAge: 600000
+            }
+        }))
     }
 
 
