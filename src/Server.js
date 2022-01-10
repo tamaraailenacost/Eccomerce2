@@ -109,6 +109,7 @@ class Server {
         this.app.use(session({
             secret: 'keyboard cat',
             resave: false,
+            saveUninitialized: false,
             cookie: {
                 httpOnly: true,
                 maxAge: 600000

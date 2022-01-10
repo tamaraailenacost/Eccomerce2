@@ -14,6 +14,9 @@ const router = Router()
 const multer = require('multer')
 const upload = multer({ dest: 'uploads/' })
 
+//authSession
+const authSession = require('../authSession')
+
 //Contenedor
 const { Contenedor } = require('../../Contenedor')
 
@@ -33,7 +36,7 @@ data.crearTabla()
 
 
 
-router.get('/', async(req, res) => {
+router.get('/', authSession, async(req, res) => {
     try {
         let todo = await data.getAll()
         console.log(todo)
@@ -48,7 +51,7 @@ router.get('/', async(req, res) => {
 })
 
 
-router.get('/:id', async(req, res) => {
+router.get('/:id', authSession, async(req, res) => {
     try {
         const id = req.params.id
         const product = await data.getById(id)
@@ -60,7 +63,7 @@ router.get('/:id', async(req, res) => {
 })
 
 
-router.post('/', upload.single('miArchivo'), async(req, res) => {
+router.post('/', authSession, upload.single('miArchivo'), async(req, res) => {
     // req.file is the `avatar` file
     // req.body will hold the text fields, if there were any
     if (!req.file) {
@@ -87,7 +90,7 @@ router.post('/', upload.single('miArchivo'), async(req, res) => {
 
 
 
-router.put("/:id", async(req, res) => {
+router.put("/:id", authSession, async(req, res) => {
     const { stock } = req.body;
     const id = Number(req.params.id);
     const updating = await data.update(id, stock);
@@ -101,7 +104,7 @@ router.put("/:id", async(req, res) => {
 // delete y update no estan funcionando bien revisar
 //crear un error handler
 // revisar que la funcion delete bt id tiene que retoranr objeto no encontrado si no esta el id
-router.delete('/:id', async(req, res) => {
+router.delete('/:id', authSession, async(req, res) => {
     try {
         const id = req.params.id
         await data.deleteById(id)

@@ -2,6 +2,9 @@
 const { Router, response } = require('express')
 const session = require('express-session')
 
+//authSession
+const authSession = require('../authSession')
+
 //Routers
 const routerLogin = Router()
 
@@ -17,12 +20,13 @@ routerLogin.get('/', async(req, res) => {
 
 
 
-routerLogin.get('/logout', async(req, res) => {
+routerLogin.get('/logout', authSession, async(req, res) => {
     req.session.destroy(err => {
         if (err) {
-            res.json({ status: 'Logout ERROR', body: err })
+            console.log("error session destroy")
+            throw new Error()
         } else {
-            res.send('Logout ok!')
+            return res.render('register-error', { error: "Logout Ok" })
         }
     })
 
@@ -41,11 +45,10 @@ routerLogin.post('/', async(req, res) => {
         if (userMail && userPass) {
             //res.json("welcome")
             req.session.user = userMail
-            res.render('home')
+
+            res.redirect('/api/home')
         } else {
-            return res.status(400).json({
-                message: "User or password incorrect"
-            })
+            return res.render('register-error', { error: "User or Password incorrect" })
         }
     } catch (error) {
         console.log(error)
