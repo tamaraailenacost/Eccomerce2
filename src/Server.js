@@ -15,6 +15,7 @@ const { getMessages, saveMessages, routerMessage } = require('./router/mensajes'
 const routerTest = require('./router/productos-test')
 const routerLogin = require('./router/login')
 const routerRegister = require('./router/register')
+const routerInfo = require('./router/info.js')
 
 
 //Socket IO
@@ -135,6 +136,7 @@ class Server {
         this.app.use('/api/productos-test', routerTest)
         this.app.use('/api/login', routerLogin)
         this.app.use('/api/register', routerRegister)
+        this.app.use('/api/info', routerInfo)
 
     }
 
