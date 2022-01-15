@@ -1,10 +1,10 @@
 const knexMariaDB = {
     client: 'mysql',
     connection: {
-        host: '127.0.0.1',
-        port: 3306,
-        user: 'root',
-        database: 'test'
+        host: process.env.KNEXMARIADB,
+        port: process.env.MARIAPORT,
+        user: process.env.MARIAUSER,
+        database: process.env.MARIADB
     }
 }
 

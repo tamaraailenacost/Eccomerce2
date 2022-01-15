@@ -1,6 +1,10 @@
 const { Server } = require('./src/Server')
 const server = new Server()
 
+//dotenv .env
+const dotenv = require('dotenv')
+dotenv.config()
+
 //authSession
 const authSession = require('./src/authSession')
 

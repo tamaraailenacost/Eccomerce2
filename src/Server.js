@@ -39,7 +39,7 @@ class Server {
         this.app = express()
         this.httpServer = new HttpServer(this.app)
         this.io = new IOServer(this.httpServer)
-        this.port = 8080
+        this.port = process.env.PORT
 
         // function
         this.starting()
@@ -107,7 +107,7 @@ class Server {
     middleware = () => {
 
         this.app.use(session({
-            secret: 'keyboard cat',
+            secret: process.env.SESSIONSECRET,
             resave: false,
             saveUninitialized: false,
             cookie: {
