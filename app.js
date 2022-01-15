@@ -1,8 +1,4 @@
 const { Server } = require('./src/Server')
-
-// Contenedor
-const { Contenedor } = require('./Contenedor');
-
 const server = new Server()
 
 //authSession

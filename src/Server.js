@@ -1,4 +1,12 @@
 const express = require('express');
+
+//passport
+const passport = require('passport')
+const passportConfig = require('./passport')
+passportConfig(passport)
+
+
+//session
 const session = require('express-session')
 
 //router
@@ -39,6 +47,7 @@ class Server {
         this.dbconecction()
         this.middleware()
         this.routing()
+
 
 
     }
@@ -97,15 +106,6 @@ class Server {
 
     middleware = () => {
 
-
-        this.app.use(express.json())
-        this.app.use(express.urlencoded({ extended: true }))
-        this.app.use(express.static('public'))
-        this.app.use(function(err, req, resp, next) {
-            console.log(err.stack)
-            resp.status(500).send('Error Server')
-        })
-
         this.app.use(session({
             secret: 'keyboard cat',
             resave: false,
@@ -115,6 +115,16 @@ class Server {
                 maxAge: 600000
             }
         }))
+        this.app.use(passport.initialize())
+        this.app.use(passport.session())
+        this.app.use(express.json())
+        this.app.use(express.urlencoded({ extended: true }))
+        this.app.use(express.static('public'))
+        this.app.use(function(err, req, resp, next) {
+            console.log(err.stack)
+            resp.status(500).send('Error Server')
+        })
+
     }
 
 

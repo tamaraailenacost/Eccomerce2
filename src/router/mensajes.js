@@ -7,7 +7,7 @@ const { knexMariaDB, knexSqlite3 } = require('../../DB/options')
 
 //saveMessages
 //const { Messages } = require('../../saveMessages')
-const Mensaje = require('../../mensajeSchema')
+const Mensaje = require('../../models/saveMessages')
 
 
 //saveMessages

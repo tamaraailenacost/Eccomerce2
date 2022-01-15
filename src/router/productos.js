@@ -18,7 +18,7 @@ const upload = multer({ dest: 'uploads/' })
 const authSession = require('../authSession')
 
 //Contenedor
-const { Contenedor } = require('../../Contenedor')
+const { Contenedor } = require('../../models/Contenedor')
 
 
 //DB
@@ -31,8 +31,6 @@ data.crearTabla()
     .then(() => {
         console.log("1) tabla creada")
     })
-
-
 
 
 
