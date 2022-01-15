@@ -16,6 +16,7 @@ const routerTest = require('./router/productos-test')
 const routerLogin = require('./router/login')
 const routerRegister = require('./router/register')
 const routerInfo = require('./router/info.js')
+const routerRandom = require('./router/random')
 
 
 //Socket IO
@@ -137,6 +138,7 @@ class Server {
         this.app.use('/api/login', routerLogin)
         this.app.use('/api/register', routerRegister)
         this.app.use('/api/info', routerInfo)
+        this.app.use('/api/randoms', routerRandom)
 
     }
 

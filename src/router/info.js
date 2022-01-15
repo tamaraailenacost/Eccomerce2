@@ -36,7 +36,4 @@ routerInfo.get('/', (req, res) => {
 
 
 
-
-
-
 module.exports = routerInfo
