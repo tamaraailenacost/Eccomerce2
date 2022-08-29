@@ -33,7 +33,7 @@ const info = () => {
 }
 
 routerInfo.get('/', (req, res) => {
-    log.error("Este es un error");
+    log.info("info del servidor");
     res.json(info())
 })
 
