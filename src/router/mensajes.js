@@ -2,12 +2,17 @@
 const { Router, response } = require('express')
 const routerMessage = Router()
 
+//log4js
+const { log4js } = require('../../node_modules/log4js-module');
+const log = log4js.getLogger();
+
 //DB
 const { knexMariaDB, knexSqlite3 } = require('../../DB/options')
 
 //saveMessages
 //const { Messages } = require('../../saveMessages')
 const Mensaje = require('../../models/saveMessages')
+
 
 
 //saveMessages
@@ -27,6 +32,7 @@ const getMessages = async() => {
         const msj = await Mensaje.find()
         return msj
     } catch (error) {
+        log.error("Este es un error");
         console.log("mensajes vacios")
         throw error
     }
@@ -42,6 +48,7 @@ const saveMessages = async(message) => {
         const saveMessage = new Mensaje(message)
         await saveMessage.save()
     } catch (error) {
+        log.error("Este es un error");
         throw error
     }
 }
@@ -52,6 +59,7 @@ routerMessage.get('/', (req, res) => {
 
         res.render('messages')
     } catch (error) {
+        log.error("Este es un error");
         res.send(error)
         throw error
     }

@@ -44,6 +44,7 @@ router.get('/', authSession, async(req, res) => {
         res.json('no hay productos para mostrar')
 
     } catch (error) {
+        log.error("Este es un error");
         res.send(error)
     }
 })
@@ -55,6 +56,7 @@ router.get('/:id', authSession, async(req, res) => {
         const product = await data.getById(id)
         res.json(product)
     } catch (error) {
+        log.error("Este es un error");
         res.send(error)
     }
 
@@ -82,6 +84,7 @@ router.post('/', authSession, upload.single('miArchivo'), async(req, res) => {
         res.json("producto agregado")
 
     } catch (err) {
+        log.error("Este es un error");
         throw err
     }
 })
@@ -108,6 +111,7 @@ router.delete('/:id', authSession, async(req, res) => {
         await data.deleteById(id)
         res.send(`el producto ${id} fue eliminanod con éxito!`)
     } catch (error) {
+        log.error("Este es un error");
         res.send(error, "producto no encontrado")
     }
 })

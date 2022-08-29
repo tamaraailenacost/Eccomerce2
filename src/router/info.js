@@ -2,6 +2,9 @@
 const { Router, response } = require('express')
 const routerInfo = Router()
 
+//log4js
+const { log4js } = require('../../node_modules/log4js-module');
+const log = log4js.getLogger();
 
 //Path de ejecución
 const path = process.execArgv
@@ -30,7 +33,7 @@ const info = () => {
 }
 
 routerInfo.get('/', (req, res) => {
-
+    log.error("Este es un error");
     res.json(info())
 })
 

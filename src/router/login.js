@@ -15,7 +15,9 @@ const Usuarios = require('../../models/user')
 const passport = require('passport')
 const { Strategy: LocalStrategy } = require('passport-local')
 
-
+//log4js
+const { log4js } = require('../../node_modules/log4js-module');
+const log = log4js.getLogger();
 
 
 
@@ -32,6 +34,7 @@ routerLogin.get('/logout', authSession, async(req, res) => {
             console.log("error session destroy")
             res.render('register-error', { error: "Error al logout" })
         } else {
+            log.error("Este es un error");
             res.render('register-error', { error: "Logout Ok" })
         }
     })
@@ -49,6 +52,7 @@ routerLogin.post('/', passport.authenticate('login', {
 
 routerLogin.get('/register-error', (req, res) => {
 
+    log.error("Este es un error");
     res.render('register-error')
 
 })
