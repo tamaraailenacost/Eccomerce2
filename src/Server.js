@@ -133,7 +133,7 @@ class Server {
     routing = () => {
 
         //this.app.use('/api/productos', router)
-        //this.app.use('/api/mensajes', routerMessage)
+        this.app.use('/api/mensajes', routerMessage)
         this.app.use('/api/productos-test', routerTest)
         this.app.use('/api/login', routerLogin)
         this.app.use('/api/register', routerRegister)

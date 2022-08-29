@@ -16,7 +16,7 @@ const passport = require('passport')
 const { Strategy: LocalStrategy } = require('passport-local')
 
 //log4js
-const { log4js } = require('../../node_modules/log4js-module');
+const { log4js } = require('../../models/log4js-module');
 const log = log4js.getLogger();
 
 

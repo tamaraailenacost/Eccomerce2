@@ -3,7 +3,7 @@ const { Router, response } = require('express')
 const routerInfo = Router()
 
 //log4js
-const { log4js } = require('../../node_modules/log4js-module');
+const { log4js } = require('../../models/log4js-module');
 const log = log4js.getLogger();
 
 //Path de ejecución
