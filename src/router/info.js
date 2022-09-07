@@ -6,6 +6,11 @@ const routerInfo = Router()
 const { log4js } = require('../../models/log4js-module');
 const log = log4js.getLogger();
 
+//autocannon
+const autocannon = require('autocannon')
+const { PassThrough } = require('stream')
+
+
 //Path de ejecución
 const path = process.execArgv
     //sistema operativo
@@ -31,6 +36,27 @@ const info = () => {
                 ${memory}`
 
 }
+
+function run (url) {
+    const buf = []
+    const outputStream = new PassThrough()
+  
+    const inst = autocannon({
+      url,
+      connections: 40,
+      duration: 20
+    })
+  
+    autocannon.track(inst, { outputStream })
+  
+    outputStream.on('data', data => buf.push(data))
+  
+    inst.on('done', () => {
+      process.stdout.write(Buffer.concat(buf))
+    })
+  }
+
+run('http://localhost:3333/api/info')
 
 routerInfo.get('/', (req, res) => {
     log.info("info del servidor");

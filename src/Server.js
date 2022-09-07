@@ -136,7 +136,7 @@ class Server {
         this.app.use('/api/mensajes', routerMessage)
         this.app.use('/api/productos-test', routerTest)
         this.app.use('/api/login', routerLogin)
-        this.app.use('/api/register', routerRegister)
+        //this.app.use('/api/register', routerRegister)
         this.app.use('/api/info', routerInfo)
         this.app.use('/api/randoms', routerRandom)
 
